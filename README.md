@@ -1,29 +1,92 @@
-# 42_get_next_line
-### Get_Next_Line - A Step Towards Advanced File Handling  
+# Get_Next_Line
 
-Get_Next_Line is a project I worked on to deepen my understanding of file handling and dynamic memory management in C. This function is designed to read a line from a file descriptor, one at a time, regardless of the line's length. It was a challenging yet rewarding experience, as it required combining low-level programming skills with attention to detail and efficiency.  
+**A robust C implementation for reading lines from file descriptors with dynamic memory management.**
 
-#### What I’ve Achieved:  
-1. **Dynamic Line Reading**:  
-   I implemented a function that reads from a file descriptor and returns one line at a time, adapting to varying buffer sizes and handling multi-line files seamlessly.  
+---
 
-2. **Memory Management**:  
-   Managing buffers, dynamic memory allocation, and freeing unused memory were critical components of this project. I worked hard to ensure no memory leaks occur during execution.  
+## Overview
 
-3. **Error Handling**:  
-   I added checks to handle invalid file descriptors, failed memory allocations, and other potential issues gracefully.  
+Get_Next_Line is a low-level file I/O utility designed to read successive lines from a file descriptor one at a time, regardless of line length or buffer constraints. The project demonstrates advanced C programming techniques including memory management, buffer handling, and robust error management.
 
-4. **Modularity**:  
-   The function is divided into smaller helper functions to keep the code clean and maintainable, adhering to a modular design.  
+## Key Features
 
-#### Highlights of the Development Process:  
-- **BUFFER_SIZE Testing**:  
-  I tested the function with various `BUFFER_SIZE` values, from small numbers like 1 to large ones like 10000000, to ensure flexibility and reliability.  
+### Core Functionality
+- **Sequential Line Reading**: Reads complete lines from file descriptors, returning one line per function call
+- **Dynamic Buffer Management**: Adapts to arbitrary line lengths and configurable `BUFFER_SIZE` constants
+- **Robust Error Handling**: Gracefully manages invalid file descriptors, memory allocation failures, and edge cases
+- **Memory Efficiency**: Implements careful memory allocation and deallocation with zero memory leaks
 
-- **Edge-Case Handling**:  
-  Special attention was given to edge cases, such as files ending without a newline, empty files, or extremely long lines.  
+### Implementation Highlights
 
-- **Custom Testing**:  
-  I wrote test cases with both valid and invalid file descriptors, ensuring the function handles all scenarios as expected.  
+| Feature | Details |
+|---------|---------|
+| **Memory Optimization** | Efficient buffer allocation and state management across multiple calls |
+| **Edge Case Handling** | Correctly handles files without trailing newlines, empty files, and extremely long lines |
+| **Modularity** | Clean separation of concerns with dedicated helper functions for buffer operations |
+| **Configurable Performance** | Supports flexible `BUFFER_SIZE` values (tested from 1 to 10,000,000 bytes) |
 
-This project was a major milestone in my programming journey. It taught me how to approach complex problems step by step, manage memory effectively, and write code that can adapt to different scenarios. Get_Next_Line is more than just a function—it’s a demonstration of my growth as a programmer and my ability to tackle challenging tasks.  
+## Technical Approach
+
+### Development Highlights
+- **Flexible Buffer Testing**: Validated across multiple `BUFFER_SIZE` configurations for reliability and performance
+- **Comprehensive Edge Case Coverage**: 
+  - Files ending without newline characters
+  - Empty file handling
+  - Extended line length support
+  - Multiple file descriptor management
+- **Rigorous Testing**: Custom test cases covering valid and invalid file descriptor scenarios
+
+## Project Structure
+
+```
+├── get_next_line.h           # Function declarations and macros
+├── get_next_line.c           # Main implementation
+├── get_next_line_utils.c     # Helper functions and utilities
+├── main.c                    # Test and usage examples
+└── README.md                 # This file
+```
+
+## Usage Example
+
+```c
+#include "get_next_line.h"
+
+int main(void)
+{
+    int fd = open("file.txt", O_RDONLY);
+    char *line;
+    
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s\n", line);
+        free(line);
+    }
+    close(fd);
+    return (0);
+}
+```
+
+## Requirements
+
+- GCC or compatible C compiler
+- POSIX-compliant system (Linux/macOS/Unix)
+- C99 or later standard
+
+## Building
+
+Compile with the standard C library:
+```bash
+gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c main.c -o get_next_line
+```
+
+## Key Learnings
+
+This project reinforces essential low-level programming competencies:
+- **Efficient memory management** through careful allocation and cleanup
+- **Systematic problem decomposition** for handling complex I/O challenges
+- **Robust error handling** for production-quality code
+- **Performance optimization** through buffer design and system-level thinking
+
+---
+
+**Status**: Complete | **Language**: C | **Difficulty**: Intermediate to Advanced
